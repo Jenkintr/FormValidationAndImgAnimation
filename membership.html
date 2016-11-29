@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>Membership</title>
+<meta name="GENERATOR" content="PHP">
+<script type = "text/javascript">
+var i = 0;
+var images = new Array("book1.gif", "book2.gif", "book3.gif", "book4.gif", "book5.gif",
+					  "book6.gif", "book7.gif");
+var renew = setInterval(function(){
+			document.getElementById("correctInfo").checked = false;
+            if(images.length == i){
+                i = 0;
+            }
+            else {
+            document.getElementById("img").src = images[i];
+            i++;
+        }
+        },75);
+
+
+
+
+//Handles the change for the checkbox. If the box is checked it runs a validation to make sure all
+//input is entered according to standards.
+function handleChange(checkbox){
+	if(checkbox.checked ==true){
+		verify();
+	}
+}
+
+//Function to make sure that everything is correctly entered.
+function verify(){
+	var notBlank = nothingBlank();
+	var state = stateVerify();
+	var zip = zipVerify();
+	var passwords = passVerify();
+	
+	if(notBlank == true && state == true && zip == true && passwords == true){
+		enableBtn();
+	}
+	else{
+		document.getElementById("correctInfo").checked = false;
+	}
+}
+
+//Function to verify that passwords match.
+function passVerify(){
+	var pass1 = document.frmcustomer.password.value;
+	var pass2 = document.frmcustomer.passwordRepeat.value;
+	
+	if (pass1.match(pass2)){
+		return true;
+	}
+	else{
+		alert("Passwords do not match.");
+		return false;
+	}
+}
+
+//Function to verify that the Zip text box only uses 5 numbers.
+function zipVerify(){
+	if(isNaN(document.frmcustomer.zip.value) || document.frmcustomer.zip.value.length != 5){
+		alert ("Please provide a zip code in the format #####.");
+		return false;
+	}
+	else
+		return true;
+}
+
+//Function to make sure that no fields are left blank and alert user if they are.
+function nothingBlank(){
+	if(document.frmcustomer.txtfirstName.value == "" || document.frmcustomer.txtlastName.value =="" ||
+		document.frmcustomer.txtaddress.value =="" || document.frmcustomer.txtcity.value =="" || 
+		document.frmcustomer.txtstate.value =="" || document.frmcustomer.zip.value =="" || 
+		document.frmcustomer.Email.value =="" || document.frmcustomer.userName.value =="" ||
+		document.frmcustomer.password.value =="" || document.frmcustomer.passwordRepeat.value ==""){
+			alert("Fields cannot be left blank.");
+			return false;
+		}
+	else 
+		return true;
+	
+}
+
+//Function to verify that the State text box only uses 2 letter characters.
+function stateVerify(){
+	var letters = /^[A-Za-z]+$/;
+	var good; 
+	
+	if (document.frmcustomer.txtstate.value.match(letters) && document.frmcustomer.txtstate.value.length == 2){
+		good = true;
+	}
+	else{
+		alert("Please enter two letters only for the state.");
+		good = false;
+	}
+	return good;
+}
+
+//Function to enable the submit Button
+function enableBtn(){
+	document.getElementById("submitBtn").disabled = false;
+}
+</script>
+
+
+</head>
+<body bgcolor="#736F6E" onload = "changeImage();">
+<center><table width="500" bgcolor="#151B54" table border="1"></center>
+<tr>
+	<td><h1><center><font size="7" color="#FFFFFF">Daylight Savings Bookstore Membership</td></h1></center></font>
+</tr>
+<tr>
+	<td><center><img id="img" src="book1.gif"><center></td
+</tr>
+</table>
+<center><table height="50" width="500" bgcolor="#151B54" table border="1">
+<tr>
+<td><h3><center><font color="#FFFFFF">Want to become a member? Just fill out the form below
+and enjoy your discounts, free items, and rewards!</td><h2></font></center>
+</table></center>
+<br>
+
+<center><b>
+<form name="frmcustomer" action="FormProcessor.html" method="get" onsubmit="return validateEntries">
+	First Name:&nbsp; <input type=text name=txtfirstName style="width: 100px" required/>&nbsp;
+    Last Name:&nbsp; <input type=text name=txtlastName style="width: 100px" required/>&nbsp;
+    Address:&nbsp; <input type=text name=txtaddress style="width: 150px" required/><br/><br/>
+    City:&nbsp; <input type=text name=txtcity style="width: 100px" required/>&nbsp;
+    State:&nbsp;<input type=text name=txtstate style="width: 25px" required/>&nbsp;
+    ZIP:&nbsp;<input type=int name=zip style="width: 50px" required/>&nbsp;
+    Email:&nbsp;<input type=text name=Email style="width: 200px" required/><br/><br/>
+	Username:&nbsp;<input type=text name=userName style="width: 100px" required/>&nbsp;
+	Password:&nbsp;<input type=password name=password style="width: 100px" required/>&nbsp;
+	Retype Password:&nbsp;<input type=password name=passwordRepeat style="width: 100px" required/><br/><br/>
+	<input type = "checkbox" id="correctInfo" value="correctInfo" onclick="handleChange(this);" checked=false> I verify that this information is correct. <br>
+    <input id="submitBtn" type="submit" value="Submit" disabled/>
+    <input type="reset" value="Reset" />
+</form>
+</b></center>
+
+<center><table width="300" bgcolor="#151B54" table border="1">
+<br>
+<center><table width="300" bgcolor="#151B54" table border="1">
+<tr>
+<td><center><font size="4"><a href="product.php" style="color:white;">Book List</a></td></center></font>
+<td><center><font size="4"><a href="membership.php" style="color:white;">Membership</a></td></center></font>
+<td><center><font size="4"><a href="Contact.htm" style="color:white;">Contacts</a></td></center></font>
+</table></center>
+</table></center>
+</body>
+</html>
